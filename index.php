@@ -12,7 +12,7 @@ if (isset($_POST)){
 
 	// ajax call check email 
 	if (isset($_POST['ajax'])){
-		$res = $db->query("SELECT * FROM user WHERE email= ? ", $_POST['email'])->fetchArray();     
+		$res = $db->query("SELECT * FROM user WHERE email = ? ", htmlentities( $_POST['email'], ENT_QUOTES) )->fetchArray();     
 		if ($res) {
 			echo 'Email already exists: <b>'.$res['email'] . '</b>';
 		}
@@ -20,27 +20,26 @@ if (isset($_POST)){
 	}
 	$output_positive = $output_negative ='';
 	if (isset($_POST['submit'])){     
-		$res =$db->query('INSERT INTO user (name, email, password) VALUES (?,?,?)', $_POST['name'], $_POST['email'], $_POST['password'])->affectedRows();		 
+		$res = $db->query('INSERT INTO user (name, email, password) VALUES (?,?,?)', htmlentities($_POST['name'], ENT_QUOTES) , htmlentities( $_POST['email'], ENT_QUOTES),  htmlentities($_POST['password'], ENT_QUOTES))->affectedRows();		 
 		if ($res) {
-			$output_positive = 'User is succesfully registered!';
+			$output_positive = 'User is succesfully registered!<br /><a href="login.php" >Log in</a>';
 		} else {
-			$output_positive = 'Failure to register the user!';
+			$output_negative = 'Failure to register a user!';
 		}
 	}
 }
 
-//$email = (isset($_POST['email'])) ? htmlentities($_POST['email']) : "";
-//$password = (isset($_POST['password'])) ? htmlentities($_POST['password']) : "";
 echo '<form style="" action="" method="post">';
-echo '<h2>User registration</h2>';
+
+echo '<h2>RSS feed <br />User registration</h2>';
 echo '<input type="text" placeholder="Name" id="name" name="name" ><br />';
 echo '<input type="email" name="email" placeholder="Email" required >';
 echo '<p class="error-email"></p>';
 echo '<input type="password" placeholder="Password" id="password" name="password" required>
      <input type="password" placeholder="Confirm Password" id="confirm_password" required>';
 echo '<br /><input style="text-align:center;" type="submit" name="submit" value="Submit" />';
-echo '<p class="success">'.$output_positive .'</p>';
-echo '<p class="error">'.$output_negative .'</p>';
+echo '<p class="success">'. $output_positive . '</p>';
+echo '<p class="error">' .  $output_negative . '</p>';
 echo '</form>';
 ?>
 </body>
@@ -69,25 +68,27 @@ $('input[type="email"]').on('input', function() {
 <style> 
 .success {
 	color: green;
+	font-type: bold;	
 	font-size: 1.2em;
-	font-type: bold;
 }
 .error, .error-email {
 	color: red;
+	font-type: bold;	
 	font-size: 1.2em;
-	font-type: bold;
 }
 input {
     width: 50%;
     padding: 4px 4px;
     margin: 8px 0;
-    box-sizing: border-box;
+    box-sizing: border-box;	
 	font-size: 1.2em;
 }
 input:invalid {
     border-color: red;
 }
 form {
-	text-align:center; display: block;
+	text-align:center; 
+	display: block;	
+	font-size: 1.2em;
 }
 </style>
