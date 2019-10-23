@@ -6,19 +6,33 @@
     <title>Log in</title>
 </head>
 <body><?php
+if ( isset($_GET['logout']) && ($_GET['logout']=='1') ){
+	unset($_SESSION['user']);
+}
+
 if (isset($_POST)){ 
 	require_once 'db_config.php';
 	include 'db.php';
 	$db = new db(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$output_positive = $output_negative ='';
 	if (isset($_POST['submit'])){     
-		$users = $db->query("SELECT * FROM user WHERE email = ? AND password = ? ", htmlentities( $_POST['email'], ENT_QUOTES), htmlentities( $_POST['password'], ENT_QUOTES) )->numRows();  		 
-		if ($users) {
+		$user = $db->query("SELECT * FROM user WHERE email = ? AND password = ? ", htmlentities( $_POST['email'], ENT_QUOTES), htmlentities( $_POST['password'], ENT_QUOTES) )->fetchArray();  
+		//print_r( $users);
+		if ($user) {
+			$_SESSION['user'] = array(
+				'name' => $user['name'],
+				'login' => 'login',
+				'email' => $user['email'] 
+			); 
 			$output_positive = 'User is succesfully logged in!<br /><a href="login.php" >Log in</a>';
 		} else {
 			$output_negative = 'Failure to log in a user!';
 		}
 	}
+}
+if (isset($_SESSION['user'])){
+	echo '<p id="user">Logged in user:<br />'.$_SESSION['user']['email'] .'<br />';
+	echo '<a   href="?logout=1">Log out</a></p>';
 }
 $email = (isset($_POST['email'])) ? htmlentities($_POST['email']) : "";
 echo '<form style="" action="" method="post">';
@@ -33,6 +47,10 @@ echo '</form>';
 ?>
 </body>
 <style> 
+#user {
+	text-align: right;
+	color: green;
+}
 .success {
 	color: green;
 	font-type: bold;	
