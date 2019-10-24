@@ -15,7 +15,7 @@ if (isset($_POST)){
 	if (isset($_POST['ajax'])){
 		$res = $db->query("SELECT * FROM user WHERE email = ? ", htmlentities( $_POST['email'], ENT_QUOTES) )->fetchArray();     
 		if ($res) {
-			echo 'Email already exists: <b>'.$res['email'] . '</b>';
+			echo 'The email <b>' . $res['email'] . '</b> already exists.';
 		}
 		return; 
 	}

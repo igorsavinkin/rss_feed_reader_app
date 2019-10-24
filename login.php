@@ -31,9 +31,11 @@ if (isset($_POST)){
 	}
 }
 if (isset($_SESSION['user'])){
-	print_r($_SESSION['user']);
-	echo '<p id="user">Logged in user:<br />'.$_SESSION['user']['email'] .'<br />';
-	echo '<a   href="logout.php">Log out</a></p>';
+	header("Location: feed.php"); /* Redirect browser to the rss feed */
+	exit();	
+	//print_r($_SESSION['user']);
+	//echo '<p id="user">Logged in user:<br />'.$_SESSION['user']['email'] .'<br />';
+	//echo '<a   href="logout.php">Log out</a></p>';
 }
 $email = (isset($_POST['email'])) ? htmlentities($_POST['email']) : "";
 echo '<form style="" action="" method="post">';
