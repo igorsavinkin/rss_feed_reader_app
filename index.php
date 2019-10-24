@@ -44,6 +44,7 @@ echo '<input type="password" placeholder="Password" id="password" name="password
 echo '<br /><input style="text-align:center;" type="submit" name="submit" value="Submit" />';
 echo '<p class="success">'. $output_positive . '</p>';
 echo '<p class="error">' .  $output_negative . '</p>';
+echo '<p>Already regietered? <a href="login.php">Log in</a>.</p>';
 echo '</form>';
 ?>
 </body>
