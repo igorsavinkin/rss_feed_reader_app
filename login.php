@@ -6,9 +6,6 @@
     <title>Log in</title>
 </head>
 <body><?php
-if ( isset($_GET['logout']) && ($_GET['logout']=='1') ){
-	unset($_SESSION['user']);
-}
 
 if (isset($_POST)){ 
 	require_once 'db_config.php';
@@ -25,14 +22,18 @@ if (isset($_POST)){
 				'email' => $user['email'] 
 			); 
 			$output_positive = 'User is succesfully logged in!<br /><a href="login.php" >Log in</a>';
+			// redirect to the feed page
+			header("Location: feed.php"); /* Redirect browser */
+			exit();			
 		} else {
 			$output_negative = 'Failure to log in a user!';
 		}
 	}
 }
 if (isset($_SESSION['user'])){
+	print_r($_SESSION['user']);
 	echo '<p id="user">Logged in user:<br />'.$_SESSION['user']['email'] .'<br />';
-	echo '<a   href="?logout=1">Log out</a></p>';
+	echo '<a   href="logout.php">Log out</a></p>';
 }
 $email = (isset($_POST['email'])) ? htmlentities($_POST['email']) : "";
 echo '<form style="" action="" method="post">';

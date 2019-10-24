@@ -29,7 +29,10 @@ if (isset($_POST)){
 		}
 	}
 }
-
+if (isset($_SESSION['user'])){
+	echo '<p id="user">Logged in user:<br />'.$_SESSION['user']['email'] .'<br />';
+	echo '<a href="logout.php">Log out</a></p>';
+}
 echo '<form style="" action="" method="post">';
 
 echo '<h2>RSS feed <br />User registration</h2>';
@@ -67,6 +70,10 @@ $('input[type="email"]').on('input', function() {
 });
 </script>
 <style> 
+#user {
+	text-align: right;
+	color: green;
+}
 .success {
 	color: green;
 	font-type: bold;	
