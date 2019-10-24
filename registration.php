@@ -37,7 +37,7 @@ echo '<form style="" action="" method="post">';
 
 echo '<h2>RSS feed <br />User registration</h2>';
 echo '<input type="text" placeholder="Name" id="name" name="name" ><br />';
-echo '<input type="email" name="email" id="email" placeholder="Email" required ><br />';
+echo '<input type="email" name="email" id="email" placeholder="Email" required ><br /><br />';
 echo '<input type="password" placeholder="Password" id="password" name="password" required>
      <input type="password" placeholder="Confirm Password" id="confirm_password" required>';
 echo '<br /><input style="text-align:center;" type="submit" name="submit" value="Submit" />';
