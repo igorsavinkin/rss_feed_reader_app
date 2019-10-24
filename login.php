@@ -24,7 +24,7 @@ if (isset($_POST)){
 				); 
 				$output_positive = 'User is succesfully logged in!<br /><a href="login.php" >Log in</a>';
 				// redirect to the feed page
-				header("Location: feed.php"); /* Redirect browser */
+				header("Location: feed.php");  
 				exit();	
 			} else {
 				$output_negative = 'Failure to log in a user! <br />Password is not correct!';
@@ -37,9 +37,6 @@ if (isset($_POST)){
 if (isset($_SESSION['user'])){
 	header("Location: feed.php"); /* Redirect browser to the rss feed */
 	exit();	
-	//print_r($_SESSION['user']);
-	//echo '<p id="user">Logged in user:<br />'.$_SESSION['user']['email'] .'<br />';
-	//echo '<a   href="logout.php">Log out</a></p>';
 }
 $email = (isset($_POST['email'])) ? htmlentities($_POST['email']) : "";
 echo '<form style="" action="" method="post">';
