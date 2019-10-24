@@ -37,14 +37,16 @@ echo '<form style="" action="" method="post">';
 
 echo '<h2>RSS feed <br />User registration</h2>';
 echo '<input type="text" placeholder="Name" id="name" name="name" ><br />';
-echo '<input type="email" name="email" placeholder="Email" required >';
-echo '<p class="error-email"></p>';
+echo '<input type="email" name="email" id="email" placeholder="Email" required ><br />';
 echo '<input type="password" placeholder="Password" id="password" name="password" required>
      <input type="password" placeholder="Confirm Password" id="confirm_password" required>';
 echo '<br /><input style="text-align:center;" type="submit" name="submit" value="Submit" />';
-echo '<p class="success">'. $output_positive . '</p>';
-echo '<p class="error">' .  $output_negative . '</p>';
-echo '<p>Already registered? <a href="login.php">Log in</a>.</p>';
+if ($output_positive or $output_negative) { 
+	echo '<p class="success">'. $output_positive . '</p>';
+	echo '<p class="error">' .  $output_negative . '</p>';
+} else {
+	echo '<p>Already registered? <a href="login.php">Log in</a>.</p>';
+}
 echo '</form>';
 ?>
 </body>
@@ -65,8 +67,15 @@ confirm_password.onkeyup = validatePassword;
 
 // validate email thru ajax
 $('input[type="email"]').on('input', function() {
-	$.post({'url': window.location.href , 'data': {"email" :$( this ).val(), "ajax": 1 } }, function( data ) {
-	    $( ".error-email" ).html( data );
+	$.post({'url': window.location.href , 'data': {"email" :$( this ).val(), "ajax": 1 } }, function( data ) {	    
+	    let d =data.split('<body>')[1]; 
+		if (d) { 
+			//$( ".error-email" ).html( d );
+			// set the input as invalid
+		    document.getElementById("email").setCustomValidity('The email is already registered!'); 
+		} else {
+			document.getElementById("email").setCustomValidity(''); // set the input as valid
+		}
 	});
 });
 </script>
@@ -79,12 +88,7 @@ $('input[type="email"]').on('input', function() {
 	color: green;
 	font-type: bold;	
 	font-size: 1.2em;
-}
-.error, .error-email {
-	color: red;
-	font-type: bold;	
-	font-size: 1.2em;
-}
+} 
 input {
     width: 50%;
     padding: 4px 4px;
