@@ -20,8 +20,9 @@ if (isset($_POST)){
 		return; 
 	}
 	$output_positive = $output_negative ='';
-	if (isset($_POST['submit'])){     
-		$res = $db->query('INSERT INTO user (name, email, password) VALUES (?,?,?)', htmlentities($_POST['name'], ENT_QUOTES) , htmlentities( $_POST['email'], ENT_QUOTES),  htmlentities($_POST['password'], ENT_QUOTES))->affectedRows();		 
+	if (isset($_POST['submit'])){  
+		$hashToStoreInDb = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		$res = $db->query('INSERT INTO user (name, email, password) VALUES (?,?,?)', htmlentities($_POST['name'], ENT_QUOTES) , htmlentities( $_POST['email'], ENT_QUOTES),  $hashToStoreInDb)->affectedRows();		 
 		if ($res) {
 			$output_positive = 'User is succesfully registered!<br /><a href="login.php" >Log in</a>';
 		} else {
@@ -34,14 +35,13 @@ if (isset($_SESSION['user'])){
 	echo '<a href="logout.php">Log out</a></p>';
 }
 echo '<form style="" action="" method="post">';
-
 echo '<h2>RSS feed <br />User registration</h2>';
 echo '<input type="text" placeholder="Name" id="name" name="name" ><br />';
 echo '<input type="email" name="email" id="email" placeholder="Email" required ><br /><br />';
 echo '<input type="password" placeholder="Password" id="password" name="password" required>
      <input type="password" placeholder="Confirm Password" id="confirm_password" required>';
 echo '<br /><input style="text-align:center;" type="submit" name="submit" value="Submit" />';
-if ($output_positive or $output_negative) { 
+if ($output_positive OR $output_negative) { 
 	echo '<p class="success">'. $output_positive . '</p>';
 	echo '<p class="error">' .  $output_negative . '</p>';
 } else {
@@ -68,9 +68,9 @@ confirm_password.onkeyup = validatePassword;
 // validate email thru ajax
 $('input[type="email"]').on('input', function() {
 	$.post({'url': window.location.href , 'data': {"email" :$( this ).val(), "ajax": 1 } }, function( data ) {	    
-	    let d =data.split('<body>')[1]; 
-		if (d) { 
-			//$( ".error-email" ).html( d );
+	    let d = data.split('<body>')[1]; 
+		if (d) { //$( ".error-email" ).html( d );
+			
 			// set the input as invalid
 		    document.getElementById("email").setCustomValidity('The email is already registered!'); 
 		} else {

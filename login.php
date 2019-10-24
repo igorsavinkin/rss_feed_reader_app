@@ -13,20 +13,24 @@ if (isset($_POST)){
 	$db = new db(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$output_positive = $output_negative ='';
 	if (isset($_POST['submit'])){     
-		$user = $db->query("SELECT * FROM user WHERE email = ? AND password = ? ", htmlentities( $_POST['email'], ENT_QUOTES), htmlentities( $_POST['password'], ENT_QUOTES) )->fetchArray();  
-		//print_r( $users);
+		$user = $db->query("SELECT * FROM user WHERE email = ?  ", htmlentities( $_POST['email'], ENT_QUOTES))->fetchArray();  		
 		if ($user) {
-			$_SESSION['user'] = array(
-				'name' => $user['name'],
-				'login' => 'login',
-				'email' => $user['email'] 
-			); 
-			$output_positive = 'User is succesfully logged in!<br /><a href="login.php" >Log in</a>';
-			// redirect to the feed page
-			header("Location: feed.php"); /* Redirect browser */
-			exit();			
+			$existingHashFromDb = $user['password'];
+			$isPasswordCorrect = password_verify($_POST['password'], $existingHashFromDb);
+			if ($isPasswordCorrect){
+				$_SESSION['user'] = array(
+					'name' => $user['name'], 
+					'email' => $user['email'] 
+				); 
+				$output_positive = 'User is succesfully logged in!<br /><a href="login.php" >Log in</a>';
+				// redirect to the feed page
+				header("Location: feed.php"); /* Redirect browser */
+				exit();	
+			} else {
+				$output_negative = 'Failure to log in a user! <br />Password is not correct!';
+			}		
 		} else {
-			$output_negative = 'Failure to log in a user!';
+			$output_negative = 'Failure to log in a user! <br />No such a user exists!';
 		}
 	}
 }
