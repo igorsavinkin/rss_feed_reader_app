@@ -11,8 +11,8 @@ address and before submitting form.
 3. RSS feed view, [the feed source](https://www.theregister.co.uk/software/headlines.atom).
 
 ### The RSS feed view consists of 2 sections:
- 1. The top section displayed 10 most frequent words with their respective counts in the feed excluding top 50 English common words; the later are taken from [Most_common_words_in_English](https://en.wikipedia.org/wiki/Most_common_words_in_English)
- 2. The lower section displays the list of feed items.
+ 1. The top section displayed 10 most frequent words with their respective counts in the feed excluding top 50 English common words; the later are taken from [Most common words in English](https://en.wikipedia.org/wiki/Most_common_words_in_English).
+ 2. The lower section displays the list of the feed items.
  
 ## Installation
 1. Clone the repository into an existing **PHP** enviroment. 
