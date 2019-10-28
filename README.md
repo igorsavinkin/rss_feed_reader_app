@@ -15,7 +15,7 @@ address and before submitting form.
  2. The lower section displays the list of the feed items.
  
 ## Installation
-1. Clone the repository into an existing **PHP** enviroment. 
-2. Get the content of the ``user.sql`` file and run it at the **MySQL** server console or at the *phpMyAdmin*. 
+1. Clone the repository into an existing **PHP** enviroment.
+2. Run the ``db_migration.php`` file to [drop  and] create db table `user`. Alternatively you might get the content of the ``user.sql`` file and run it at the **MySQL** server console or at the *phpMyAdmin*. 
 3. Set up the **MySQL** database credentials inside of the ``db_config.php`` file.
 4. Start the app by visiting ``index.php`` file.
