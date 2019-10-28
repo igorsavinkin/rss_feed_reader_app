@@ -1,4 +1,5 @@
 -- CREATE TABLE user
+DROP TABLE IF EXISTS `user`; 
 CREATE TABLE `user` (
   `id`       int(10) UNSIGNED AUTO_INCREMENT,
   `email`    varchar(64) NOT NULL,
